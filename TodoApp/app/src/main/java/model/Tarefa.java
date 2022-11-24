@@ -1,6 +1,8 @@
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package model;
-
 import java.util.Date;
 
 public class Tarefa {
@@ -96,11 +98,5 @@ public class Tarefa {
 
     public void setDataAtualizacao(Date dataAtualizacao) {
         this.dataAtualizacao = dataAtualizacao;
-    }
-
-    @Override
-    public String toString() {
-        return "Tarefa{" + "id=" + id + ", idProject=" + idProject + ", nome=" + nome + ", descricao=" + descricao + ", observacoes=" + observacoes + ", finalizado=" + finalizado + ", prazo=" + prazo + ", dataCriacao=" + dataCriacao + ", dataAtualizacao=" + dataAtualizacao + '}';
-    }
-    
+    }   
 }
