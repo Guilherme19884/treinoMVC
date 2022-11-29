@@ -5,6 +5,7 @@
 package controller;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
@@ -18,7 +19,24 @@ import util.ConnectionFactory;
 public class TarefaController {
 
     public void salvar(Tarefa tarefa) {
+        String sql = "INSERT INTO tarefas (idProject, nome, descricao, finalizado"
+                + "obeservacoes, prazo, dataCriacao, dataAtualizacao) VALUES(?,?,?,?,?,?,?,?)";
+        
+        Connection connection = null;
+        PreparedStatement statement = null;
 
+        try {
+            connection = ConnectionFactory.getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, tarefa.getIdProject());
+            statement.setString(2, tarefa.getNome());
+            statement.setString(3, tarefa.getDescricao());
+            statement.setBoolean(4,tarefa.isFinalizado());
+            statement.setString(5, tarefa.getObservacoes());
+            statement.setDate(6, new Date(tarefa.getDataCriacao().getTime()));
+            
+        } catch (Exception e) { //parei aqui aula 11.c
+        }
     }
 
     public void atualizar(Tarefa tarefa) {
