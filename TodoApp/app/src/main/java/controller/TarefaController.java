@@ -53,20 +53,20 @@ public class TarefaController {
     public void remmoverById(int tarefaID) throws SQLException {
         String sql = "DELETE FROM tarefa WHERE id = ?";
 
-        Connection conn = null;
+        Connection connection = null;
         PreparedStatement statement = null;
 
         try {
 
-            conn = ConnectionFactory.getConnection();
-            statement = conn.prepareStatement(sql);// ele é um objeto que ajuda a preparar o comando sql que vai ser executado no banco
+            connection = ConnectionFactory.getConnection();
+            statement = connection.prepareStatement(sql);// ele é um objeto que ajuda a preparar o comando sql que vai ser executado no banco
             statement.setInt(1, tarefaID);
             statement.execute();
 
         } catch (SQLException e) {
             throw new SQLException("Erro ao deletar a tarefa");
         }finally{
-            ConnectionFactory.closeConnection(conn);
+            ConnectionFactory.closeConnection(connection, statement);
         }
     }
 
