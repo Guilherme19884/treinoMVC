@@ -21,7 +21,7 @@ public class TarefaController {
     public void salvar(Tarefa tarefa) {
         String sql = "INSERT INTO tarefas (idProject, nome, descricao, finalizado"
                 + "obeservacoes, prazo, dataCriacao, dataAtualizacao) VALUES(?,?,?,?,?,?,?,?)";
-        
+
         Connection connection = null;
         PreparedStatement statement = null;
 
@@ -31,23 +31,54 @@ public class TarefaController {
             statement.setInt(1, tarefa.getIdProject());
             statement.setString(2, tarefa.getNome());
             statement.setString(3, tarefa.getDescricao());
-            statement.setBoolean(4,tarefa.isFinalizado());
+            statement.setBoolean(4, tarefa.isFinalizado());
             statement.setString(5, tarefa.getObservacoes());
             statement.setDate(6, new Date(tarefa.getDataCriacao().getTime()));
             statement.setDate(7, new Date(tarefa.getDataCriacao().getTime()));
             statement.setDate(8, new Date(tarefa.getDataAtualizacao().getTime()));
             statement.execute();
-            
-        } catch (Exception ex) { 
+
+        } catch (Exception ex) {
             throw new RuntimeException("Erro ao salvar a tarefa "
-            + ex.getMessage(), ex);
-        }finally{
+                    + ex.getMessage(), ex);
+        } finally {
             ConnectionFactory.closeConnection(connection);
         }
     }
 
-    public void atualizar(Tarefa tarefa) {
+    public void atualizar(Tarefa tarefa) throws SQLException {
+        String sql = "UPDATE tarefas SET"
+                + "idProject = ?, "
+                + "nome = ?, "
+                + "descricao = ?, "
+                + "finalizado = ?, "
+                + "observacoes = ?, "
+                + "prazo = ?, "
+                + "dataCriacao = ?, "
+                + "dataAtualizacao = ?, "
+                + "WHERE id = ? ";
 
+        Connection connection = null;
+        PreparedStatement statement = null;
+        
+        try {
+            connection = ConnectionFactory.getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1,tarefa.getIdProject());
+            statement.setString(2,tarefa.getNome());
+            statement.setString(3, tarefa.getDescricao());
+            statement.setBoolean(4, tarefa.isFinalizado());
+            statement.setString(5, tarefa.getObservacoes());
+            statement.setDate(6, new Date(tarefa.getDataCriacao().getTime()));
+            statement.setDate(7, new Date(tarefa.getDataCriacao().getTime()));
+            statement.setDate(8, new Date(tarefa.getDataAtualizacao().getTime()));
+            statement.execute();
+        } catch (Exception ex) {
+            throw new RuntimeException("Erro ao salvar a tarefa "
+                    + ex.getMessage(), ex);
+        } finally {
+            ConnectionFactory.closeConnection(connection);
+        }
     }
 
     public void remmoverById(int tarefaID) throws SQLException {
@@ -63,9 +94,9 @@ public class TarefaController {
             statement.setInt(1, tarefaID);
             statement.execute();
 
-        } catch (SQLException e) {
-            throw new SQLException("Erro ao deletar a tarefa");
-        }finally{
+        } catch (Exception ex) {
+            throw new RuntimeException("Erro ao deletar a tarefa");
+        } finally {
             ConnectionFactory.closeConnection(connection, statement);
         }
     }
