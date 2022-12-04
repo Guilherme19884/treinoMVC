@@ -34,8 +34,15 @@ public class TarefaController {
             statement.setBoolean(4,tarefa.isFinalizado());
             statement.setString(5, tarefa.getObservacoes());
             statement.setDate(6, new Date(tarefa.getDataCriacao().getTime()));
+            statement.setDate(7, new Date(tarefa.getDataCriacao().getTime()));
+            statement.setDate(8, new Date(tarefa.getDataAtualizacao().getTime()));
+            statement.execute();
             
-        } catch (Exception e) { //parei aqui aula 11.c
+        } catch (Exception ex) { 
+            throw new RuntimeException("Erro ao salvar a tarefa "
+            + ex.getMessage(), ex);
+        }finally{
+            ConnectionFactory.closeConnection(connection);
         }
     }
 

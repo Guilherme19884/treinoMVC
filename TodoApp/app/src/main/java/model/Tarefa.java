@@ -27,6 +27,10 @@ public class Tarefa {
         this.dataCriacao = dataCriacao;
         this.dataAtualizacao = dataAtualizacao;
     }
+    
+    public Tarefa (){
+        this.dataCriacao = new Date();
+    }
 
     public int getId() {
         return id;
